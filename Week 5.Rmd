@@ -1,0 +1,99 @@
+---
+title: "Week 5"
+author: "Jaymeen Gandhi"
+date: "October 14, 2019"
+output: html_document
+---
+```{r}
+require(tidyverse)
+```
+
+```{r}
+mpg
+```
+
+```{r}
+mean(mpg$cty)
+sd(mpg$cty)
+```
+```{r}
+mpg %>% summarise(mean_cty = mean(cty) , sd_cty =  sd(cty))
+```
+
+```{r}
+hist(mpg$cty)
+```
+```{r}
+mpg %>% summarise(mean_hwy = mean(hwy) , sd (hwy))
+hist(mpg$hwy)
+```
+
+```{r}
+mpg%>%head()
+```
+
+
+```{r}
+mpg%>%group_by(class)%>%summarise(mean(cty),mean(hwy))
+```
+```{r}
+mpg%>%group_by(cty)%>%summarise(mean(cty),mean(hwy))
+mpg%>%group_by(cyl)%>%summarise(mean(cty),mean(hwy))
+mpg%>%group_by(year)%>%summarise(mean(cty),mean(hwy))
+```
+```{r}
+mpg %>% group_by(manufacturer) %>% summarise(mean_cty=mean(cty),mean_hwy=mean(hwy)) %>% arrange(desc(mean_cty))
+```
+
+```{r}
+mpg%>%group_by(manufacturer)%>% summarise(mean_displ=mean(displ)) %>% arrange(desc(mean_displ))
+```
+```{r}
+plot(mpg$displ , mpg$cty)
+```
+```{r}
+mpg2=mpg%>%mutate(cty_displ=cty*displ)
+mpg2
+```
+
+
+```{r}
+cereal=read_csv("C:/Users/jayme/Downloads/cereal3(1).csv")
+```
+
+```{r}
+mean(cereal$Calories)
+sd(cereal$Calories)
+```
+```{r}
+hist(cereal$Calories)
+```
+
+```{r}
+cereal%>%arrange(desc(Calories))%>%head(5)
+mean(cereal$Sugars,na.rm = TRUE)#REMOVES MISSING VALUES
+cereal%>%summarise(mean=mean(Sugars, na.rm= TRUE), sd(Sugars, na.rm = TRUE))
+hist(cereal$Sugars)
+
+```
+
+```{r}
+cereal%>%summarise(median=median(Sugars, na.rm= TRUE), sd(Sugars, na.rm = TRUE))
+```
+```{r}
+cereal %>% arrange(Calories)%>%arrange(desc(Fiber))%>%head(5)
+```
+
+```{r}
+cereal%>% mutate(f2c=Fiber/Calories)%>% group_by(Brand) %>% summarise(mean_val=mean(f2c))%>%arrange(desc(mean_val))%>%head((3))
+  
+```
+
+```{r}
+cereal%>%group_by(Brand)%>%summarise(m_f=mean(Fiber),m_c=mean(Calories))%>% mutate(mean_values=m_f/m_c)%>%arrange(desc(mean_values))
+```
+
+```{r}
+cereal%>%is.na()%>%colSums()
+```
+
